@@ -4,10 +4,10 @@ This is a little app to assist in the note-taking process while playing the popu
 
 The idea behind the app is meant to follow the following note-taking methodology, which is just what my familly uses when we play the game and its variants (editions and house rules will be different from table to table):
 
-## An example game
+## An Example Game
 Imagine a game table, starting with yourself (the player) and then proceeding clockwise with players Mary, Tom, Susan, Anthony, and Eloise. 3 of the 21 cards are placed in an envelope as 'the solution', and the remaining cards are dealt to the six players, each player having 3 cards. 
 
-### Your hand
+### Your Hand
 You look at the three cards you were dealt, the Conservatory, Mrs White, and the Hall. You take your note sheet, and mark down the three cards you know at the beginning of the game, as well as labelling each of the columns for the other players, so you can keep track of what you know about _their_ hands as well. If your game proceeds clockwise, you might have a game sheet that looks like this. 
 
 ![Beginning Clue Game Sheet](https://i.imgur.com/EiLuUt9.png)
