@@ -1,7 +1,35 @@
+const convert = {
+  0: ``,
+  1: `<span class="maybe">?</span>`,
+  2: `<span class="dontHave">X</span>`,
+  3: `<span class="have">&check;</span>`,
+  green: "Mr Green",
+  mustard: "Col Mustard",
+  peacock: "Mrs Peacock",
+  plum: "Prof Plum",
+  scarlett: "Ms Scarlett",
+  white: "Mrs White",
+  knife: "Knife",
+  pipe: "Lead Pipe",
+  revolver: "Revolver",
+  rope: "Rope",
+  stick: "Candlestick",
+  wrench: "Wrench",
+  ballroom: "Ballrooom",
+  billiard: "Billiard Room",
+  conservatory: "Conservatory",
+  dining: "Dining Room",
+  hall: "Hall",
+  kitchen: "Kitchen",
+  library: "Library",
+  lounge: "Lounge",
+  study: "Study",
+};
+
 class Player {
-  constructor(name, initial) {
+  constructor(name, abbrev) {
     this.name = name;
-    this.initial = initial;
+    this.abbrev = abbrev;
     // Key:
     // 0 = Unknown
     // 1 = Might Have
@@ -36,6 +64,20 @@ class Player {
     this.refutations = [];
   }
 }
+
+class Guess {
+  constructor(character, item, location) {
+    this.character = character;
+    this.item = item;
+    this.location = location;
+  }
+}
+
+Guess.prototype.toString = () => {
+  return `${convert[this.character]}/${convert[this.item]}/${
+    convert[this.location]
+  }`;
+};
 
 class NoteAssistant {
   constructor(players = ["Abigail", "Ben", "Cassandra", "David", "Emma"]) {
