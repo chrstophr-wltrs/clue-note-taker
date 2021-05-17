@@ -92,6 +92,7 @@ class Player {
     for (const [key, value] of Object.entries(guess)) {
       this.notes[`${key}s`][value] = 2;
     }
+    this.deduce();
   }
 
   refute(guess) {
@@ -103,6 +104,7 @@ class Player {
         this.notes[`${key}s`][value] = 1;
       }
     }
+    this.deduce();
   }
 
   reveal(clue = "") {
@@ -116,6 +118,38 @@ class Player {
       }
     }
   }
+
+  deduce() {
+    // Deduces information about a Player's cards,
+    // based on previous Refutations and Passes
+
+    // pruneList holds the indices of any items
+    // we'll need to remove from Player.refutations
+    let pruneList = [];
+    // scan for any confirmations where
+    // we can identify a clue the Player MUST have
+    for (const refute of this.refutations) {
+      const { suspect, item, location } = refute;
+      const { suspects, items, locations } = this.notes;
+      if (items[item] === 2 && locations[location] === 2) {
+        // Player MUST have the suspect from this Guess
+        suspects[suspect] = 3;
+        pruneList.unshift(this.refutations.indexOf(refute));
+      } else if (suspects[suspect] === 2 && locations[location] === 2) {
+        // Player MUST have the item from this Guess
+        items[item] = 3;
+        pruneList.unshift(this.refutations.indexOf(refute));
+      } else if (suspects[suspect] === 2 && items[item] === 2) {
+        // Player MUST have the location from this Guess
+        locations[location] = 3;
+        pruneList.unshift(this.refutations.indexOf(refute));
+      }
+    }
+    // Prune any elements we were able to confirm
+    for (const ind of pruneList) {
+      this.refutations.splice(ind, 1);
+    }
+  }
 }
 
 class NoteAssistant {
@@ -126,8 +160,4 @@ class NoteAssistant {
 
 window.addEventListener("DOMContentLoaded", domLoaded);
 
-function domLoaded() {
-  jeff = new Player("Jeff", "J");
-  jeff.reveal("plum");
-  console.log(jeff.notes.suspects);
-}
+function domLoaded() {}
