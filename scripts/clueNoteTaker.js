@@ -76,31 +76,45 @@ class Player {
         study: 0,
       },
     };
-    // Player.refutations will hold all of the instances where that Player was able to Refute a Guess
+    // Player.refutations will hold all of the instances
+    // where that Player was able to Refute a Guess
     // Each item will be a Guess object
     // For example, one item might be plum/revolver/library
-    // So you could have a Player.refutations of [plum/revolver/library, green/hall/knife] and so on
+    // So you could have a Player.refutations of
+    // [plum/revolver/library, green/hall/knife] and so on
     this.refutations = [];
   }
 
   pass(guess) {
-    // Player cannot Refute a Guess, and therefore does not have any of the clues
+    // Player cannot Refute a Guess,
+    // and therefore does not have any of the clues
     // guess should always be an instance of a Guess object
-    this.notes.suspects[guess.suspect] = 2;
-    this.notes.items[guess.item] = 2;
-    this.notes.locations[guess.location] = 2;
+    for (const [key, value] of Object.entries(guess)) {
+      this.notes[`${key}s`][value] = 2;
+    }
   }
 
   refute(guess) {
-    // Player can Refute a Guess, but the user doesn't know which clue they have
+    // Player can Refute a Guess,
+    // but the user doesn't know which clue they have
     // guess should always be an instance of a Guess object
+    for (const [key, value] of Object.entries(guess)) {
+      if (!(this.notes[`${key}s`][value] === 2)) {
+        this.notes[`${key}s`][value] = 1;
+      }
+    }
   }
 
-  trueRefute(guess) {
-    // Player can Refute a Guess, and Player reveals a clue to the user
-    // guess should always be an instance of a Guess object
-    const { suspect, item, location } = guess;
-    const { suspects, items, locations } = this.notes;
+  reveal(clue = "") {
+    // Player can Refute a Guess,
+    // and Player reveals a clue to the user
+    for (const [key, value] of Object.entries(this.notes)) {
+      for (const subKey in value) {
+        if (clue === subKey) {
+          this.notes[key][subKey] = 3;
+        }
+      }
+    }
   }
 }
 
@@ -110,6 +124,10 @@ class NoteAssistant {
   }
 }
 
+window.addEventListener("DOMContentLoaded", domLoaded);
+
 function domLoaded() {
-  myNotes = new NoteAssistant();
+  jeff = new Player("Jeff", "J");
+  jeff.reveal("plum");
+  console.log(jeff.notes.suspects);
 }
