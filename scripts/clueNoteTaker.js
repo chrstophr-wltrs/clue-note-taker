@@ -14,22 +14,16 @@ const convert = {
   plum: "Prof Plum",
   scarlett: "Ms Scarlett",
   white: "Mrs White",
-  knife: "Knife",
   pipe: "Lead Pipe",
-  revolver: "Revolver",
-  rope: "Rope",
   stick: "Candlestick",
-  wrench: "Wrench",
-  ballroom: "Ballrooom",
   billiard: "Billiard Room",
-  conservatory: "Conservatory",
   dining: "Dining Room",
-  hall: "Hall",
-  kitchen: "Kitchen",
-  library: "Library",
-  lounge: "Lounge",
-  study: "Study",
 };
+
+function title(lowerString) {
+  // converts lowerString to title case
+  return lowerString[0].toUpperCase() + lowerString.slice(1);
+}
 
 class Guess {
   constructor(sus, it, loc) {
@@ -44,8 +38,7 @@ Guess.prototype.toString = () => {
 };
 
 class Player {
-  constructor(name, abbrev) {
-    this.name = name;
+  constructor(abbrev) {
     this.abbrev = abbrev;
     // Key:
     // 0 = Unknown
@@ -152,15 +145,25 @@ class Player {
 }
 
 class NoteAssistant {
-  constructor(players = ["Abigail", "Ben", "Cassandra", "David", "Emma"]) {
+  constructor() {
     this.players = [];
+  }
+  renderSection(sectionID) {
+    const section = document.getElementById(sectionID);
+    section.innerHTML = "";
+    titleRow = section.insertRow();
+  }
+
+  addPlayer(...abbrev) {
+    for (const ab of abbrev) {
+      this.players.push(new Player(ab));
+    }
   }
 }
 
 window.addEventListener("DOMContentLoaded", domLoaded);
 
 function domLoaded() {
-  const guessMe = new Guess("plum", "wrench", "library");
-  const { sus, it, loc } = guessMe;
-  console.log(sus, it, loc);
+  noteTaker = new NoteAssistant();
+  noteTaker.addPlayer("A", "B", "C", "D", "E");
 }
