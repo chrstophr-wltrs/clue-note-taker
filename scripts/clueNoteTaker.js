@@ -1,24 +1,30 @@
-const convert = {
-  // Key:
-  // 0 = Unknown
-  // 1 = Might Have
-  // 2 = Does Not Have
-  // 3 = Definitely Has
-  0: ``,
-  1: `<span class="maybe">?</span>`,
-  2: `<span class="dontHave">X</span>`,
-  3: `<span class="have">&check;</span>`,
-  green: "Mr Green",
-  mustard: "Col Mustard",
-  peacock: "Mrs Peacock",
-  plum: "Prof Plum",
-  scarlett: "Ms Scarlett",
-  white: "Mrs White",
-  pipe: "Lead Pipe",
-  stick: "Candlestick",
-  billiard: "Billiard Room",
-  dining: "Dining Room",
-};
+function convert(val) {
+  const convertTable = {
+    // Key:
+    // 0 = Unknown
+    // 1 = Might Have
+    // 2 = Does Not Have
+    // 3 = Definitely Has
+    0: ``,
+    1: `<span class="maybe">?</span>`,
+    2: `<span class="dontHave">X</span>`,
+    3: `<span class="have">&check;</span>`,
+    green: "Mr Green",
+    mustard: "Col Mustard",
+    peacock: "Mrs Peacock",
+    plum: "Prof Plum",
+    scarlett: "Ms Scarlett",
+    white: "Mrs White",
+    pipe: "Lead Pipe",
+    stick: "Candlestick",
+    billiard: "Billiard Room",
+    dining: "Dining Room",
+  };
+  if (convertTable[val] === undefined) {
+    return title(val);
+  }
+  return convertTable[val];
+}
 
 function title(lowerString) {
   // converts lowerString to title case
@@ -34,7 +40,7 @@ class Guess {
 }
 
 Guess.prototype.toString = () => {
-  return `${convert[this.sus]}/${convert[this.it]}/${convert[this.loc]}`;
+  return `${convert(this.sus)}/${convert(this.it)}/${convert(this.loc)}`;
 };
 
 class Player {
@@ -146,12 +152,40 @@ class Player {
 
 class NoteAssistant {
   constructor() {
+    this.blankie = new Player("?");
     this.players = [];
   }
-  renderSection(sectionID) {
+
+  renderSection(sectionID = "") {
     const section = document.getElementById(sectionID);
     section.innerHTML = "";
-    titleRow = section.insertRow();
+    const titleRow = section.insertRow();
+    const sectionTitleCell = titleRow.insertCell();
+    sectionTitleCell.innerText = title(sectionID);
+    for (const clue in this.players[0].notes[sectionID]) {
+      const clueRow = section.insertRow();
+      const clueName = clueRow.insertCell();
+      clueName.innerText = convert(clue);
+      for (const p of this.players) {
+        const playerClueCell = clueRow.insertCell();
+        playerClueCell.innerHTML = convert(p.notes[sectionID][clue]);
+      }
+    }
+  }
+
+  renderPlayers() {
+    const playerRow = document.getElementById("playerRow");
+    playerRow.innerHTML = `<th>Players</th>`;
+    for (const p of this.players) {
+      playerRow.innerHTML += `\n<th>${p.abbrev}<th>`;
+    }
+  }
+
+  renderAll() {
+    this.renderPlayers();
+    for (const id of ["suspects", "items", "locations"]) {
+      this.renderSection(id);
+    }
   }
 
   addPlayer(...abbrev) {
@@ -166,4 +200,5 @@ window.addEventListener("DOMContentLoaded", domLoaded);
 function domLoaded() {
   noteTaker = new NoteAssistant();
   noteTaker.addPlayer("A", "B", "C", "D", "E");
+  noteTaker.renderAll();
 }
