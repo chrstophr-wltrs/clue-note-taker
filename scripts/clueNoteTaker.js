@@ -32,17 +32,15 @@ const convert = {
 };
 
 class Guess {
-  constructor(suspect, item, location) {
-    this.suspect = suspect;
-    this.item = item;
-    this.location = location;
+  constructor(sus, it, loc) {
+    this.sus = sus;
+    this.it = it;
+    this.loc = loc;
   }
 }
 
 Guess.prototype.toString = () => {
-  return `${convert[this.suspect]}/${convert[this.item]}/${
-    convert[this.location]
-  }`;
+  return `${convert[this.sus]}/${convert[this.it]}/${convert[this.loc]}`;
 };
 
 class Player {
@@ -100,10 +98,11 @@ class Player {
     // but the user doesn't know which clue they have
     // guess should always be an instance of a Guess object
     for (const [key, value] of Object.entries(guess)) {
-      if (!(this.notes[`${key}s`][value] === 2)) {
+      if (this.notes[`${key}s`][value] === 0) {
         this.notes[`${key}s`][value] = 1;
       }
     }
+    this.refutations.push(guess);
     this.deduce();
   }
 
@@ -129,19 +128,19 @@ class Player {
     // scan for any confirmations where
     // we can identify a clue the Player MUST have
     for (const refute of this.refutations) {
-      const { suspect, item, location } = refute;
+      const { sus, it, loc } = refute;
       const { suspects, items, locations } = this.notes;
-      if (items[item] === 2 && locations[location] === 2) {
-        // Player MUST have the suspect from this Guess
-        suspects[suspect] = 3;
+      if (items[it] === 2 && locations[loc] === 2) {
+        // Player MUST have the sus from this Guess
+        suspects[sus] = 3;
         pruneList.unshift(this.refutations.indexOf(refute));
-      } else if (suspects[suspect] === 2 && locations[location] === 2) {
+      } else if (suspects[sus] === 2 && locations[loc] === 2) {
         // Player MUST have the item from this Guess
-        items[item] = 3;
+        items[it] = 3;
         pruneList.unshift(this.refutations.indexOf(refute));
-      } else if (suspects[suspect] === 2 && items[item] === 2) {
+      } else if (suspects[sus] === 2 && items[it] === 2) {
         // Player MUST have the location from this Guess
-        locations[location] = 3;
+        locations[loc] = 3;
         pruneList.unshift(this.refutations.indexOf(refute));
       }
     }
@@ -160,4 +159,8 @@ class NoteAssistant {
 
 window.addEventListener("DOMContentLoaded", domLoaded);
 
-function domLoaded() {}
+function domLoaded() {
+  const guessMe = new Guess("plum", "wrench", "library");
+  const { sus, it, loc } = guessMe;
+  console.log(sus, it, loc);
+}
