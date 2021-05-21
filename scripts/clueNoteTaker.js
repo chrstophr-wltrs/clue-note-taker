@@ -32,10 +32,10 @@ function title(lowerString) {
 }
 
 class Guess {
-  constructor(sus, it, loc) {
-    this.sus = sus;
-    this.it = it;
-    this.loc = loc;
+  constructor(suspect, item, location) {
+    this.suspect = suspect;
+    this.item = item;
+    this.location = location;
   }
 }
 
@@ -127,19 +127,19 @@ class Player {
     // scan for any confirmations where
     // we can identify a clue the Player MUST have
     for (const refute of this.refutations) {
-      const { sus, it, loc } = refute;
+      const { suspect, item, location } = refute;
       const { suspects, items, locations } = this.notes;
-      if (items[it] === 2 && locations[loc] === 2) {
-        // Player MUST have the sus from this Guess
-        suspects[sus] = 3;
+      if (items[item] === 2 && locations[location] === 2) {
+        // Player MUST have the suspect from this Guess
+        suspects[suspect] = 3;
         pruneList.unshift(this.refutations.indexOf(refute));
-      } else if (suspects[sus] === 2 && locations[loc] === 2) {
+      } else if (suspects[suspect] === 2 && locations[location] === 2) {
         // Player MUST have the item from this Guess
-        items[it] = 3;
+        items[item] = 3;
         pruneList.unshift(this.refutations.indexOf(refute));
-      } else if (suspects[sus] === 2 && items[it] === 2) {
+      } else if (suspects[suspect] === 2 && items[item] === 2) {
         // Player MUST have the location from this Guess
-        locations[loc] = 3;
+        locations[location] = 3;
         pruneList.unshift(this.refutations.indexOf(refute));
       }
     }
@@ -158,6 +158,7 @@ class NoteAssistant {
 
   renderSection(sectionID = "") {
     const section = document.getElementById(sectionID);
+    section.innerHTML = "";
     const titleRow = section.insertRow();
     const titleCell = titleRow.insertCell();
     titleCell.colSpan = this.players.length + 1;
@@ -188,7 +189,13 @@ class NoteAssistant {
 
   renderAll() {
     this.renderPlayers();
-    for (const id of ["suspects", "items", "locations"]) {
+    for (const id in this.players[0].notes) {
+      this.renderSection(id);
+    }
+  }
+
+  updateClues() {
+    for (const id in this.players[0].notes) {
       this.renderSection(id);
     }
   }
