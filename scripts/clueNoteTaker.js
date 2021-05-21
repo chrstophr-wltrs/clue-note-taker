@@ -169,6 +169,7 @@ class NoteAssistant {
       // section.innerHTML += `\n<td>${convert(clue)}</td>`;
       const clueRow = section.insertRow();
       clueRow.insertCell().innerHTML = convert(clue);
+      clueRow.classList.add("clueRow");
       for (const p of this.players) {
         clueRow.insertCell().innerHTML = convert(p.notes[sectionID][clue]);
         // section.innerHTML += `\n<td>${convert(p.notes[sectionID][clue])}</td>`;
