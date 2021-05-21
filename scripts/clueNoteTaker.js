@@ -152,32 +152,36 @@ class Player {
 
 class NoteAssistant {
   constructor() {
-    this.blankie = new Player("?");
-    this.players = [];
+    this.mystery = new Player("?");
+    this.players = [this.mystery];
   }
 
   renderSection(sectionID = "") {
     const section = document.getElementById(sectionID);
-    section.innerHTML = "";
     const titleRow = section.insertRow();
-    const sectionTitleCell = titleRow.insertCell();
-    sectionTitleCell.innerText = title(sectionID);
+    const titleCell = titleRow.insertCell();
+    titleCell.colSpan = this.players.length + 1;
+    titleCell.innerHTML = convert(sectionID);
+    // section.innerHTML = `\n<tr>\n<td colspan="${
+    //   this.players.length + 1
+    // }">${convert(sectionID)}</td>`;
     for (const clue in this.players[0].notes[sectionID]) {
+      // section.innerHTML += `\n<td>${convert(clue)}</td>`;
       const clueRow = section.insertRow();
-      const clueName = clueRow.insertCell();
-      clueName.innerText = convert(clue);
+      clueRow.insertCell().innerHTML = convert(clue);
       for (const p of this.players) {
-        const playerClueCell = clueRow.insertCell();
-        playerClueCell.innerHTML = convert(p.notes[sectionID][clue]);
+        clueRow.insertCell().innerHTML = convert(p.notes[sectionID][clue]);
+        // section.innerHTML += `\n<td>${convert(p.notes[sectionID][clue])}</td>`;
       }
     }
+    // section += `\n</tr>\n`;
   }
 
   renderPlayers() {
     const playerRow = document.getElementById("playerRow");
     playerRow.innerHTML = `<th>Players</th>`;
     for (const p of this.players) {
-      playerRow.innerHTML += `\n<th>${p.abbrev}<th>`;
+      playerRow.innerHTML += `\n<th>${p.abbrev}</th>`;
     }
   }
 
