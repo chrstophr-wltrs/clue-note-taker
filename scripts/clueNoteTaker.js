@@ -197,14 +197,14 @@ class NoteAssistant {
   }
 
   checkForFoundClues() {
+    // First check if any of the clues have been
+    // confirmed for the other players and mark
+    // that clue as being absent from the other
+    // players and from the envelope
     for (const player of this.players) {
-      console.log(`Checking player ${player.abbrev}`);
       for (const section in player.notes) {
-        console.log(`Checking section ${section}`);
         for (const clue in player.notes[section]) {
-          console.log(`Checking clue ${clue}`);
           if (player.notes[section][clue] === 3) {
-            console.log(`${clue} is found!`);
             for (const otherPlayer of this.players) {
               if (!(otherPlayer.abbrev === player.abbrev)) {
                 otherPlayer.notes[section][clue] = 2;
@@ -237,6 +237,7 @@ function domLoaded() {
   noteTaker.addPlayer("A", "B", "C", "D", "E");
   noteTaker.renderAll();
   const bob = noteTaker.players[2];
-  bob.reveal("green");
+  bob.refute(new Guess("green", "knife", "conservatory"));
+  bob.pass(new Guess("green", "knife", "lounge"));
   noteTaker.updateClues();
 }
