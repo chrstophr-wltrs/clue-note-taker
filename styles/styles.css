@@ -4,19 +4,55 @@
 
 .have {
   color: #4c4;
-  font-size: 1rem;
 }
 
 .dontHave {
   color: #c44;
 }
 
-.clueRow {
-  font-size: .75rem;
-  height: 33px;
+.sectionName {
+  font-size: 1.25rem;
+  text-align: center;
+  font-weight: bold;
 }
 
-.clue, th {
+#mainNotesTable {
+  width: 300px;
+  border: 1px solid #888;
+}
+
+#suspectsName {
+  background-color: #9b5528;
+}
+
+#itemsName {
+  background-color: #521c13;
+}
+
+#locationsName {
+  background-color: #311e14;
+}
+
+tr:nth-child(even) {
+  background-color: #2f2f2f;
+}
+
+tr:nth-child(odd) {
+  background-color: #373737;
+}
+
+td, th {
+  padding: 2px 5px;
   text-align: center;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+}
+
+#playerRow {
+  background-color: #35607b;
+}
+
+.clueName {
+  text-align: left;
 }
 /*# sourceMappingURL=styles.css.map */

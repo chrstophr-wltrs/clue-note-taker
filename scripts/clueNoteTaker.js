@@ -162,14 +162,17 @@ class NoteAssistant {
     const titleRow = section.insertRow();
     const titleCell = titleRow.insertCell();
     titleCell.colSpan = this.players.length + 1;
+    titleCell.classList.add(`sectionName`);
+    titleCell.id = `${sectionID}Name`;
     titleCell.innerHTML = convert(sectionID);
     for (const clue in this.players[0].notes[sectionID]) {
       const clueRow = section.insertRow();
-      clueRow.insertCell().innerHTML = convert(clue);
-      clueRow.classList.add("clueRow");
+      const clueNameCell = clueRow.insertCell();
+      clueNameCell.classList.add(`clueName`);
+      clueNameCell.innerHTML = convert(clue);
       for (const p of this.players) {
         const clueCell = clueRow.insertCell();
-        clueCell.classList.add("clue");
+        clueCell.classList.add(`clue`);
         clueCell.innerHTML = convert(p.notes[sectionID][clue]);
       }
     }
@@ -177,7 +180,7 @@ class NoteAssistant {
 
   renderPlayers() {
     const playerRow = document.getElementById("playerRow");
-    playerRow.innerHTML = `<th>Players</th>`;
+    playerRow.innerHTML = `<th>Players -&gt;</th>`;
     for (const p of this.players) {
       playerRow.innerHTML += `\n<th>${p.abbrev}</th>`;
     }
