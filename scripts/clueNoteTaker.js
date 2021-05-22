@@ -172,7 +172,9 @@ class NoteAssistant {
       clueRow.insertCell().innerHTML = convert(clue);
       clueRow.classList.add("clueRow");
       for (const p of this.players) {
-        clueRow.insertCell().innerHTML = convert(p.notes[sectionID][clue]);
+        const clueCell = clueRow.insertCell();
+        clueCell.classList.add("clue");
+        clueCell.innerHTML = convert(p.notes[sectionID][clue]);
         // section.innerHTML += `\n<td>${convert(p.notes[sectionID][clue])}</td>`;
       }
     }
@@ -194,7 +196,28 @@ class NoteAssistant {
     }
   }
 
+  checkForFoundClues() {
+    for (const player of this.players) {
+      console.log(`Checking player ${player.abbrev}`);
+      for (const section in player.notes) {
+        console.log(`Checking section ${section}`);
+        for (const clue in player.notes[section]) {
+          console.log(`Checking clue ${clue}`);
+          if (player.notes[section][clue] === 3) {
+            console.log(`${clue} is found!`);
+            for (const otherPlayer of this.players) {
+              if (!(otherPlayer.abbrev === player.abbrev)) {
+                otherPlayer.notes[section][clue] = 2;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   updateClues() {
+    this.checkForFoundClues();
     for (const id in this.players[0].notes) {
       this.renderSection(id);
     }
@@ -213,4 +236,7 @@ function domLoaded() {
   noteTaker = new NoteAssistant();
   noteTaker.addPlayer("A", "B", "C", "D", "E");
   noteTaker.renderAll();
+  const bob = noteTaker.players[2];
+  bob.reveal("green");
+  noteTaker.updateClues();
 }
