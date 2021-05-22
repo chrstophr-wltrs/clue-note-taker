@@ -206,12 +206,20 @@ class NoteAssistant {
         for (const clue in player.notes[section]) {
           if (player.notes[section][clue] === 3) {
             for (const otherPlayer of this.players) {
-              if (!(otherPlayer.abbrev === player.abbrev)) {
+              if (otherPlayer.abbrev !== player.abbrev) {
                 otherPlayer.notes[section][clue] = 2;
               }
             }
           }
         }
+      }
+    }
+    // Now check to see if we can deduce anything
+    // about the envelope, based on the fact that
+    // we know none of the players have that clue
+    const mystery = this.players[0];
+    for (const section in mystery.notes) {
+      for (const clue in mystery.notes[section]) {
       }
     }
   }
