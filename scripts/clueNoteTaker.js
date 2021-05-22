@@ -1,10 +1,10 @@
 function convert(val) {
   const convertTable = {
-    // Key:
-    // 0 = Unknown
-    // 1 = Might Have
-    // 2 = Does Not Have
-    // 3 = Definitely Has
+    /* Key:
+    0 = Unknown
+    1 = Might Have
+    2 = Does Not Have
+    3 = Definitely Has */
     0: ``,
     1: `<span class="maybe">?</span>`,
     2: `<span class="dontHave">X</span>`,
@@ -46,11 +46,11 @@ Guess.prototype.toString = () => {
 class Player {
   constructor(abbrev) {
     this.abbrev = abbrev;
-    // Key:
-    // 0 = Unknown
-    // 1 = Might Have
-    // 2 = Does Not Have
-    // 3 = Definitely Has
+    /* Key:
+    0 = Unknown
+    1 = Might Have
+    2 = Does Not Have
+    3 = Definitely Has */
     this.notes = {
       suspects: {
         green: 0,
@@ -73,19 +73,19 @@ class Player {
         study: 0,
       },
     };
-    // Player.refutations will hold all of the instances
-    // where that Player was able to Refute a Guess
-    // Each item will be a Guess object
-    // For example, one item might be plum/revolver/library
-    // So you could have a Player.refutations of
-    // [plum/revolver/library, green/hall/knife] and so on
+    /* Player.refutations will hold all of the instances
+    where that Player was able to Refute a Guess
+    Each item will be a Guess object
+    For example, one item might be plum/revolver/library
+    So you could have a Player.refutations of
+    [plum/revolver/library, green/hall/knife] and so on */
     this.refutations = [];
   }
 
   pass(guess) {
-    // Player cannot Refute a Guess,
-    // and therefore does not have any of the clues
-    // guess should always be an instance of a Guess object
+    /* Player cannot Refute a Guess,
+    and therefore does not have any of the clues
+    guess should always be an instance of a Guess object */
     for (const [key, value] of Object.entries(guess)) {
       this.notes[`${key}s`][value] = 2;
     }
@@ -93,9 +93,9 @@ class Player {
   }
 
   refute(guess) {
-    // Player can Refute a Guess,
-    // but the user doesn't know which clue they have
-    // guess should always be an instance of a Guess object
+    /* Player can Refute a Guess,
+    but the user doesn't know which clue they have 
+    guess should always be an instance of a Guess object */
     for (const [key, value] of Object.entries(guess)) {
       if (this.notes[`${key}s`][value] === 0) {
         this.notes[`${key}s`][value] = 1;
@@ -106,8 +106,8 @@ class Player {
   }
 
   reveal(clue = "") {
-    // Player can Refute a Guess,
-    // and Player reveals a clue to the user
+    /* Player can Refute a Guess,
+    and Player reveals a clue to the user */
     for (const [key, value] of Object.entries(this.notes)) {
       for (const subKey in value) {
         if (clue === subKey) {
@@ -118,14 +118,14 @@ class Player {
   }
 
   deduce() {
-    // Deduces information about a Player's cards,
-    // based on previous Refutations and Passes
+    /* Deduces information about a Player's cards,
+    based on previous Refutations and Passes
 
-    // pruneList holds the indices of any items
-    // we'll need to remove from Player.refutations
+    pruneList holds the indices of any items
+    we'll need to remove from Player.refutations */
     let pruneList = [];
-    // scan for any confirmations where
-    // we can identify a clue the Player MUST have
+    /* scan for any confirmations where
+    we can identify a clue the Player MUST have */
     for (const refute of this.refutations) {
       const { suspect, item, location } = refute;
       const { suspects, items, locations } = this.notes;
@@ -163,11 +163,7 @@ class NoteAssistant {
     const titleCell = titleRow.insertCell();
     titleCell.colSpan = this.players.length + 1;
     titleCell.innerHTML = convert(sectionID);
-    // section.innerHTML = `\n<tr>\n<td colspan="${
-    //   this.players.length + 1
-    // }">${convert(sectionID)}</td>`;
     for (const clue in this.players[0].notes[sectionID]) {
-      // section.innerHTML += `\n<td>${convert(clue)}</td>`;
       const clueRow = section.insertRow();
       clueRow.insertCell().innerHTML = convert(clue);
       clueRow.classList.add("clueRow");
@@ -175,10 +171,8 @@ class NoteAssistant {
         const clueCell = clueRow.insertCell();
         clueCell.classList.add("clue");
         clueCell.innerHTML = convert(p.notes[sectionID][clue]);
-        // section.innerHTML += `\n<td>${convert(p.notes[sectionID][clue])}</td>`;
       }
     }
-    // section += `\n</tr>\n`;
   }
 
   renderPlayers() {
@@ -197,10 +191,10 @@ class NoteAssistant {
   }
 
   checkForFoundClues() {
-    // First check if any of the clues have been
-    // confirmed for the other players and mark
-    // that clue as being absent from the other
-    // players and from the envelope
+    /* First check if any of the clues have been
+    confirmed for the other players and mark
+    that clue as being absent from the other
+    players and from the envelope */
     for (const player of this.players) {
       for (const section in player.notes) {
         for (const clue in player.notes[section]) {
@@ -214,12 +208,18 @@ class NoteAssistant {
         }
       }
     }
-    // Now check to see if we can deduce anything
-    // about the envelope, based on the fact that
-    // we know none of the players have that clue
+    /* Now check to see if we can deduce anything
+    about the envelope, based on the fact that
+    we know none of the players have that clue */
     const mystery = this.players[0];
     for (const section in mystery.notes) {
-      for (const clue in mystery.notes[section]) {
+      clueLoop: for (const clue in mystery.notes[section]) {
+        for (const otherPlayer of this.players.slice(1)) {
+          if (otherPlayer.notes[section][clue] !== 2) {
+            continue clueLoop;
+          }
+        }
+        mystery.notes[section][clue] = 3;
       }
     }
   }
@@ -244,8 +244,8 @@ function domLoaded() {
   noteTaker = new NoteAssistant();
   noteTaker.addPlayer("A", "B", "C", "D", "E");
   noteTaker.renderAll();
-  const bob = noteTaker.players[2];
-  bob.refute(new Guess("green", "knife", "conservatory"));
-  bob.pass(new Guess("green", "knife", "lounge"));
+  for (const i of noteTaker.players.slice(1)) {
+    i.notes.items.stick = 2;
+  }
   noteTaker.updateClues();
 }
