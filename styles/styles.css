@@ -4,6 +4,7 @@
 
 .have {
   color: #4c4;
+  font-size: 1rem;
 }
 
 .dontHave {
@@ -12,5 +13,10 @@
 
 .clueRow {
   font-size: .75rem;
+  height: 33px;
+}
+
+.clue, th {
+  text-align: center;
 }
 /*# sourceMappingURL=styles.css.map */
