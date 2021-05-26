@@ -159,20 +159,26 @@ class NoteAssistant {
   renderSection(sectionID = "") {
     const $section = $(`#${sectionID}`);
     $section.html("");
-    $section.append(`<tr>
-    <td colspan="${
-      this.players.length + 1
-    }" id="${sectionID}Name" class="sectionName">${convert(sectionID)}</td>
-    </tr>`);
+    $section.append(
+      $(`<tr>`).append(
+        $("<td>")
+          .attr("colspan", this.players.length + 1)
+          .attr("id", `${sectionID}Name`)
+          .attr("class", "sectionName")
+          .text(convert(sectionID))
+      )
+    );
     for (const clue in this.players[0].notes[sectionID]) {
       $section.append(
-        `<tr id="${clue}Row"><td class="clueName">${convert(clue)}</td></tr>`
+        $(`<tr>`)
+          .attr(`id`, `${clue}Row`)
+          .append($(`<td>`).attr(`class`, `clueName`).text(convert(clue)))
       );
       for (const p of this.players) {
         $(`#${clue}Row`).append(
-          `<td id="${clue}${this.players.indexOf(p)}">${convert(
-            p.notes[sectionID][clue]
-          )}</td>`
+          $(`<td>`)
+            .attr(`id`, clue + this.players.indexOf(p))
+            .append(convert(p.notes[sectionID][clue]))
         );
       }
     }
