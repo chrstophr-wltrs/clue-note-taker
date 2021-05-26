@@ -157,32 +157,33 @@ class NoteAssistant {
   }
 
   renderSection(sectionID = "") {
-    const section = document.getElementById(sectionID);
-    section.innerHTML = "";
-    const titleRow = section.insertRow();
-    const titleCell = titleRow.insertCell();
-    titleCell.colSpan = this.players.length + 1;
-    titleCell.classList.add(`sectionName`);
-    titleCell.id = `${sectionID}Name`;
-    titleCell.innerHTML = convert(sectionID);
+    const $section = $(`#${sectionID}`);
+    $section.html("");
+    $section.append(`<tr>
+    <td colspan="${
+      this.players.length + 1
+    }" id="${sectionID}Name" class="sectionName">${convert(sectionID)}</td>
+    </tr>`);
     for (const clue in this.players[0].notes[sectionID]) {
-      const clueRow = section.insertRow();
-      const clueNameCell = clueRow.insertCell();
-      clueNameCell.classList.add(`clueName`);
-      clueNameCell.innerHTML = convert(clue);
+      $section.append(
+        `<tr id="${clue}Row"><td class="clueName">${convert(clue)}</td></tr>`
+      );
       for (const p of this.players) {
-        const clueCell = clueRow.insertCell();
-        clueCell.classList.add(`clue`);
-        clueCell.innerHTML = convert(p.notes[sectionID][clue]);
+        $(`#${clue}Row`).append(
+          `<td id="${clue}${this.players.indexOf(p)}">${convert(
+            p.notes[sectionID][clue]
+          )}</td>`
+        );
       }
     }
   }
 
   renderPlayers() {
-    const playerRow = document.getElementById("playerRow");
-    playerRow.innerHTML = `<th>Players -&gt;</th>`;
+    $("#playerRow").html = `<th>Players -&gt;</th>`;
+    $("#mainNotesTable").prepend("<colgroup></colgroup>");
     for (const p of this.players) {
-      playerRow.innerHTML += `\n<th>${p.abbrev}</th>`;
+      $("#mainNotesTable").prepend("<colgroup></colgroup>");
+      $("#playerRow").append(`\n<th>${p.abbrev}</th>`);
     }
   }
 
