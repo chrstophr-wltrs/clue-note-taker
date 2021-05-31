@@ -252,7 +252,7 @@ window.addEventListener("DOMContentLoaded", domLoaded);
 
 function domLoaded() {
   noteTaker = new NoteAssistant();
-  noteTaker.addPlayer("A", "B", "C", "D", "E");
+  noteTaker.addPlayer("A", "B", "C", "D", "E", "F");
   noteTaker.renderAll();
   for (const i of noteTaker.players.slice(1)) {
     i.notes.items.stick = 2;

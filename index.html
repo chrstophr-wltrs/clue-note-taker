@@ -27,7 +27,7 @@
     <div class="container mt-3">
       <h1>Clue Note-Taker</h1>
       <div class="row" id="contentRow">
-        <div class="col-sm" id="tableWrapper">
+        <div class="col-sm-5" id="tableWrapper">
           <table id="mainNotesTable" class="m-3">
             <thead>
               <tr id="playerRow">
@@ -39,11 +39,21 @@
             <tbody id="locations"></tbody>
           </table>
         </div>
-        <div id="buttonBox">
-          <button class="btn btn-success" type="button" id="newGuessButton">
+        <div id="buttonBox" class="col-sm-3">
+          <button
+            class="btn btn-success m-3 p-2"
+            type="button"
+            id="newGuessButton"
+          >
             New Guess
           </button>
-          <button class="btn btn-danger">Cancel</button>
+          <button
+            class="btn btn-danger m-3 p-2"
+            type="button"
+            id="cancelGuessButton"
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>

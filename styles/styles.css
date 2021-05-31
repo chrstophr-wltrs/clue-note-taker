@@ -56,4 +56,20 @@ td, th {
   text-align: left;
   min-width: 130px;
 }
+
+#buttonBox {
+  position: -webkit-sticky;
+  position: sticky;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+button {
+  max-width: 150px;
+}
 /*# sourceMappingURL=styles.css.map */
