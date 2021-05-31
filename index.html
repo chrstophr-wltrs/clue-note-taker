@@ -26,16 +26,26 @@
   <body>
     <div class="container mt-3">
       <h1>Clue Note-Taker</h1>
-      <table id="mainNotesTable" class="m-3">
-        <thead>
-          <tr id="playerRow">
-            <th>Players</th>
-          </tr>
-        </thead>
-        <tbody id="suspects"></tbody>
-        <tbody id="items"></tbody>
-        <tbody id="locations"></tbody>
-      </table>
+      <div class="row" id="contentRow">
+        <div class="col-sm" id="tableWrapper">
+          <table id="mainNotesTable" class="m-3">
+            <thead>
+              <tr id="playerRow">
+                <th>Players</th>
+              </tr>
+            </thead>
+            <tbody id="suspects"></tbody>
+            <tbody id="items"></tbody>
+            <tbody id="locations"></tbody>
+          </table>
+        </div>
+        <div id="buttonBox">
+          <button class="btn btn-success" type="button" id="newGuessButton">
+            New Guess
+          </button>
+          <button class="btn btn-danger">Cancel</button>
+        </div>
+      </div>
     </div>
   </body>
 </html>
