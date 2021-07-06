@@ -1,0 +1,76 @@
+$brownSugar: #9E6240;
+$tumbleweed: #DEA47E;
+$vermilllion: #CD4631;
+$eggshell: #F8F2DC;
+$pewterBlue: #81ADC8;
+$mediumGray: #333;
+$sectionTitlePercent: 30%;
+$rowPercent: 1.5%;
+$lightBorder: 1px solid #888;
+  
+.maybe {
+  color: #cc4;
+}
+
+.have {
+  color: #4c4;
+}
+
+.dontHave {
+  color: #c44;
+}
+
+.sectionName {
+  font-size: 1.25rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+#mainNotesTable {
+  border: $lightBorder;
+}
+
+#suspectsName {
+  background-color: darken($tumbleweed, $sectionTitlePercent);
+}
+
+#itemsName {
+  background-color: darken($vermilllion, $sectionTitlePercent);
+}
+
+#locationsName {
+  background-color: darken($brownSugar, $sectionTitlePercent);
+}
+
+tr {
+  &:nth-child(even)
+    background-color: darken($mediumGray, $rowPercent);
+  
+  &:nth-child(odd)
+    background-color: lighten($mediumGray, $rowPercent);
+}
+
+td, th
+  padding: 2px 5px;
+  text-align: center;
+  border-left: $lightBorder;
+  border-right: $lightBorder;
+  min-width: 30px;
+
+#playerRow {
+  background-color: darken($pewterBlue, $sectionTitlePercent );
+}
+
+.clueName {
+  text-align: left;
+  min-width: 130px;
+}
+
+#buttonBox {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  max-width: 150px;
+}
