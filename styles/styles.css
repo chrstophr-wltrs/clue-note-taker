@@ -66,9 +66,16 @@ th {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  position: fixed;
+  top: 200px;
+  left: 450px;
 }
 
 button {
-  max-width: 150px;
+  width: 150px;
+}
+
+#inProgressButtonGroup {
+  display: none;
 }
 /*# sourceMappingURL=styles.css.map */

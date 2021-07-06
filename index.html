@@ -38,22 +38,40 @@
             <tbody id="items"></tbody>
             <tbody id="locations"></tbody>
           </table>
-        </div>
-        <div id="buttonBox" class="col-sm-3">
-          <button
-            class="btn btn-success m-3 p-2"
-            type="button"
-            id="newGuessButton"
-          >
-            New Guess
-          </button>
-          <button
-            class="btn btn-danger m-3 p-2"
-            type="button"
-            id="cancelGuessButton"
-          >
-            Cancel
-          </button>
+          <div id="buttonBox" class="col-sm-3">
+            <div id="restingButtonGroup">
+              <button
+                class="btn btn-success m-3 p-2"
+                type="button"
+                id="newGuessButton"
+              >
+                New Guess
+              </button>
+            </div>
+            <div id="inProgressButtonGroup">
+              <button
+                class="btn btn-success m-3 p-2"
+                type="button"
+                id="passGuessButton"
+              >
+                Pass
+              </button>
+              <button
+                class="btn btn-warning m-3 p-2"
+                type="button"
+                id="refuteGuessButton"
+              >
+                Refute
+              </button>
+              <button
+                class="btn btn-danger m-3 p-2"
+                type="button"
+                id="cancelGuessButton"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
