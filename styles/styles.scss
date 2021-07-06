@@ -1,13 +1,13 @@
-$brownSugar: #9E6240;
-$tumbleweed: #DEA47E;
-$vermilllion: #CD4631;
-$eggshell: #F8F2DC;
-$pewterBlue: #81ADC8;
+$brownSugar: #9e6240;
+$tumbleweed: #dea47e;
+$vermilllion: #cd4631;
+$eggshell: #f8f2dc;
+$pewterBlue: #81adc8;
 $mediumGray: #333;
 $sectionTitlePercent: 30%;
 $rowPercent: 1.5%;
 $lightBorder: 1px solid #888;
-  
+
 .maybe {
   color: #cc4;
 }
@@ -43,22 +43,26 @@ $lightBorder: 1px solid #888;
 }
 
 tr {
-  &:nth-child(even)
+  &:nth-child(even) {
     background-color: darken($mediumGray, $rowPercent);
-  
-  &:nth-child(odd)
+  }
+
+  &:nth-child(odd) {
     background-color: lighten($mediumGray, $rowPercent);
+  }
 }
 
-td, th
+td,
+th {
   padding: 2px 5px;
   text-align: center;
   border-left: $lightBorder;
   border-right: $lightBorder;
   min-width: 30px;
+}
 
 #playerRow {
-  background-color: darken($pewterBlue, $sectionTitlePercent );
+  background-color: darken($pewterBlue, $sectionTitlePercent);
 }
 
 .clueName {

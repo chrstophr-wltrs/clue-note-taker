@@ -40,7 +40,8 @@ tr:nth-child(odd) {
   background-color: #373737;
 }
 
-td, th {
+td,
+th {
   padding: 2px 5px;
   text-align: center;
   border-left: 1px solid #888;
